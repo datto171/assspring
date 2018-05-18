@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+</head>
+<body>
+    <h1 th:text="#{hello}"></h1>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <td class="text-center">Id</td>
+            <td class="text-center">Name</td>
+            <td class="text-center">Category</td>
+            <td class="text-center">Description</td>
+            <td class="text-center">ImgUrl</td>
+            <td class="text-center">Price</td>
+            <td class="text-center">Created Date</td>
+            <td class="text-center">Edited Date</td>
+            <td class="text-center">Status</td>
+            <td class="text-center">Modal</td>
+        </tr>
+        </thead>
+        <tr th:each="product : ${pagination.getContent()}">
+            <td class="col-md-1 text-center text1-table" th:text="${product.id}"></td>
+            <td class="col-md-2 text-center text1-table" th:text="${product.name}"></td>
+            <td class="col-md-1 text-center text1-table" th:text="${product.categoryId}"></td>
+            <td class="col-md-2 text-center text1-table" th:text="${product.description}"></td>
+            <td class="col-md-1 text-center text1-table" th:text="${product.imgUrl}"></td>
+            <td class="col-md-2 text-center text1-table" th:text="${product.price}"></td>
+            <td class="col-md-2 text-center text1-table" th:text="${product.createdTime}"></td>
+            <td class="col-md-2 text-center text1-table" th:text="${product.editedTime}"></td>
+            <td class="col-md-1 text-center text1-table" th:text="${product.status}"></td>
+            <td class="col-md-2 text-center text1-table">
+                <a th:href="@{'/product/edit/' + ${product.id}}" class="btn btn-danger" role="button">Edit</a>
+                <a th:href="@{'/product/delete/' + ${product.id}}" class="btn btn-danger" role="button">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label=" navigation">
+        <ul class="pager">
+            <li><a th:href="@{/product/list(page=1, limit=${limit})}">First</a></li>
+            <li th:if="${page &gt; 1}">
+                <a th:href="@{/product/list(page = ${page - 1}, limit=${limit})}" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                </a>
+            </li>
+            <li><a th:text="${page}">1</a></li>
+            <li th:if="${page &lt; pagination.getTotalPages()}">
+                <a th:href="@{/product/list(page=${page + 1}, limit=${limit})}" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                </a>
+            </li>
+            <li><a th:href="@{/product/list(page=${pagination.getTotalPages()}, limit=${limit})}">Last</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
